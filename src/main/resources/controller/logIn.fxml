@@ -10,12 +10,12 @@
    <children>
       <ImageView fitHeight="259.0" fitWidth="310.0" layoutX="91.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../imagenes/kisspng-bank-indonesia-pekanbaru-central-bank-kantor-perwa-bank-logo-5b46b758722757.3438162915313611124676.png" />
+            <Image url="@../es/iesfranciscodelosrios/imagenes/kisspng-bank-indonesia-pekanbaru-central-bank-kantor-perwa-bank-logo-5b46b758722757.3438162915313611124676.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="264.0" fitWidth="234.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../imagenes/kisspng-payday-loan-retirement-credit-pension-5af8e1e7622f83.2862768815262601994022.png" />
+            <Image url="@../es/iesfranciscodelosrios/imagenes/kisspng-payday-loan-retirement-credit-pension-5af8e1e7622f83.2862768815262601994022.png" />
          </image>
       </ImageView>
       <TextField layoutX="226.0" layoutY="175.0" promptText="Usuario" style="-fx-background-color: #0047AB;" />
