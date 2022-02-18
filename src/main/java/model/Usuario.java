@@ -24,6 +24,15 @@ public class Usuario {
 		this.administrador = administrador;
 
 	}
+	
+	public Usuario(Long id, String nombre, String apellidos, String correo, String password) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.correo = correo;
+		this.password = password;
+	}
 
 	public Usuario() {
 		this(-1L, "default", "default", "default", "default", new ArrayList<Cuenta>(), new Administrador());
