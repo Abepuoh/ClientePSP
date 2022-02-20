@@ -1,11 +1,22 @@
 package model;
 
-public class Paquete<T> {
+import java.io.Serializable;
+
+public class Paquete<T> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	int opcion;
 	T objeto;
 	double cantidad;
+	Boolean resultado;
 
+	public Boolean getResultado() {
+		return resultado;
+	}
+	public void setResultado(Boolean resultado) {
+		this.resultado = resultado;
+	}
 	public double getCantidad() {
 		return cantidad;
 	}

@@ -1,10 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Administrador  {
+public class Administrador implements Serializable {
 
+
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String nombre;
 	private String apellidos;
@@ -12,6 +16,12 @@ public class Administrador  {
 	private String password;
 
 	List<Usuario> usuario;
+	
+	public Administrador(String nombre, String password) {
+		super();
+		this.nombre = nombre;
+		this.password = password;
+	}
 
 	public Administrador(Long id, String nombre, String apellidos, String correo, String password,
 			List<Usuario> usuario) {
