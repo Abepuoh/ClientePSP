@@ -82,5 +82,9 @@ public class Cuenta implements Serializable {
 	public String toString() {
 		return "Cuenta [id=" + id + ", numero=" + numero + ", saldo=" + saldo + ", usuario=" + usuario + "]";
 	}
+
+    public Object getNumeroCuentaProperty() {
+        return null;
+    }
 	
 }
