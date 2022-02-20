@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="509.0" style="-fx-background-color: #ff6200;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="509.0" style="-fx-background-color: #ff6200;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.createUsuarioController">
    <children>
       <ImageView fitHeight="259.0" fitWidth="310.0" layoutX="100.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -18,8 +18,8 @@
             <Image url="@../es/iesfranciscodelosrios/imagenes/kisspng-payday-loan-retirement-credit-pension-5af8e1e7622f83.2862768815262601994022.png" />
          </image>
       </ImageView>
-      <TextField layoutX="226.0" layoutY="175.0" prefHeight="26.0" prefWidth="209.0" promptText="Nombre" style="-fx-background-color: #0047AB;" />
-      <TextField layoutX="226.0" layoutY="219.0" prefHeight="26.0" prefWidth="210.0" promptText="Apellidos" style="-fx-background-color: #0047AB;" />
+      <TextField fx:id="TFNombre" layoutX="226.0" layoutY="175.0" prefHeight="26.0" prefWidth="209.0" promptText="Nombre" style="-fx-background-color: #0047AB;" />
+      <TextField fx:id="TFApellidos" layoutX="226.0" layoutY="219.0" prefHeight="26.0" prefWidth="210.0" promptText="Apellidos" style="-fx-background-color: #0047AB;" />
       <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="185.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/hombre.png" />
@@ -30,20 +30,20 @@
             <Image url="@../es/iesfranciscodelosrios/imagenes/hombre.png" />
          </image>
       </ImageView>
-      <Button layoutX="304.0" layoutY="372.0" mnemonicParsing="false" style="-fx-background-color: #0047AB;" text="CREAR" textFill="WHITE" />
-      <TextField layoutX="225.0" layoutY="264.0" prefHeight="26.0" prefWidth="210.0" promptText="Email" style="-fx-background-color: #0047AB;" />
+      <Button fx:id="buttCrear" layoutX="304.0" layoutY="372.0" mnemonicParsing="false" onAction="#crearUsuario" style="-fx-background-color: #0047AB;" text="CREAR" textFill="WHITE" />
+      <TextField fx:id="TFEmail" layoutX="225.0" layoutY="264.0" prefHeight="26.0" prefWidth="210.0" promptText="Email" style="-fx-background-color: #0047AB;" />
       <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="184.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/email.png" />
          </image>
       </ImageView>
-      <TextField layoutX="226.0" layoutY="305.0" prefHeight="26.0" prefWidth="210.0" promptText="Contraseña" style="-fx-background-color: #0047AB;" />
+      <TextField fx:id="TFContraseña" layoutX="226.0" layoutY="305.0" prefHeight="26.0" prefWidth="210.0" promptText="Contraseña" style="-fx-background-color: #0047AB;" />
       <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="185.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/candado.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="43.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="IMvolver" fitHeight="40.0" fitWidth="43.0" layoutX="14.0" layoutY="14.0" onDragDetected="#volver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/back-button.png" />
          </image>

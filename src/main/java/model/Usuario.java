@@ -27,7 +27,13 @@ public class Usuario implements Serializable {
 		this.administrador = administrador;
 
 	}
-	
+	public Usuario (String nombre, String apellidos, String correo, String password){
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.correo = correo;
+		this.password = password;
+		this.cuentas = new ArrayList<Cuenta>();
+	}
 	public Usuario(Long id, String nombre, String apellidos, String correo, String password) {
 		super();
 		this.id = id;
@@ -35,12 +41,14 @@ public class Usuario implements Serializable {
 		this.apellidos = apellidos;
 		this.correo = correo;
 		this.password = password;
+		this.cuentas = new ArrayList<Cuenta>();
 	}
 
 	public Usuario(String nombre, String password) {
 		super();
 		this.nombre = nombre;
 		this.password = password;
+		this.cuentas = new ArrayList<Cuenta>();
 	}
 
 	public Usuario() {

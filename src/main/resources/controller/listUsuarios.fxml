@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="491.0" style="-fx-background-color: #ff6200;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="491.0" style="-fx-background-color: #ff6200;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.listUsuariosController">
    <children>
       <ImageView fitHeight="87.0" fitWidth="163.0" layoutX="164.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -29,17 +29,17 @@
             <Image url="@../imagenes/candado.png" />
          </image>
       </ImageView>
-      <Button layoutX="359.0" layoutY="360.0" mnemonicParsing="false" style="-fx-background-color: #0047AB;" text="CREAR CUENTA" textFill="WHITE" />
-      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="8.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="buttCreateCuenta" layoutX="359.0" layoutY="360.0" mnemonicParsing="false" onAction="#createCuenta" style="-fx-background-color: #0047AB;" text="CREAR CUENTA" textFill="WHITE" />
+      <ImageView fx:id="IMBack" fitHeight="42.0" fitWidth="43.0" layoutX="8.0" layoutY="7.0" onMouseClicked="#volver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/back-button.png" />
          </image>
       </ImageView>
-      <TableView layoutX="116.0" layoutY="88.0" prefHeight="257.0" prefWidth="351.0">
+      <TableView fx:id="TVUsuarios" layoutX="116.0" layoutY="88.0" prefHeight="257.0" prefWidth="351.0">
         <columns>
-          <TableColumn prefWidth="127.20000457763672" text="NOMBRE" />
-          <TableColumn prefWidth="121.5999755859375" text="APELLIDOS" />
-            <TableColumn prefWidth="104.0" text="CORREO" />
+          <TableColumn fx:id="TCNombre" prefWidth="102.40001678466797" text="NOMBRE" />
+          <TableColumn fx:id="TCApellidos" prefWidth="113.60003662109375" text="APELLIDOS" />
+            <TableColumn fx:id="TCCorreo" prefWidth="137.5999755859375" text="CORREO" />
         </columns>
       </TableView>
    </children>
