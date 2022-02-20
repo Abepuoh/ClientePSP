@@ -1,10 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String nombre;
 	private String apellidos;
@@ -31,6 +34,12 @@ public class Usuario {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.correo = correo;
+		this.password = password;
+	}
+
+	public Usuario(String nombre, String password) {
+		super();
+		this.nombre = nombre;
 		this.password = password;
 	}
 

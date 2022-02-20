@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import model.Administrador;
 import model.Paquete;
 import model.Usuario;
 
@@ -27,17 +28,16 @@ public class loginController {
 	@FXML
 	private TextField txtUsuario;
 
+	public Socket socket;
+	public OutputStream outputStream;
+	public ObjectOutputStream oos;
+
 	@FXML
-	void logInAdmin(ActionEvent event) {
+	public void initialize() {
 		try {
-			Socket socket = new Socket("localhost", 9999); // conecta con el servidor en el puerto 9999
-			OutputStream outputStream = socket.getOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-			Usuario usuario = new Usuario(1L, "Pedro", "Pastor", "test@test.com", "123445");
-			Paquete p1 = new Paquete<>();
-			p1.setCantidad(1);
-			p1.setObjeto(usuario);
-			
+			socket = new Socket("localhost", 9999);
+			outputStream = socket.getOutputStream();
+			oos = new ObjectOutputStream(outputStream);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -46,7 +46,56 @@ public class loginController {
 	}
 
 	@FXML
+	void logInAdmin(ActionEvent event) {
+		String contrasena = txtContrasena.getText();
+		String usuario = txtUsuario.getText();
+
+		if (contrasena == null && usuario == null) {
+			System.out.println("TA MAL PERRRROOOOOOOOOOOOOOOOO");
+		} else {
+			try {
+				Paquete escribir = new Paquete<>();
+				escribir.setOpcion(11);
+				escribir.setObjeto(new Usuario(usuario, contrasena));
+				oos.writeObject(escribir);
+				// leemo la respuesta del servidor
+				Paquete leer = new Paquete<>();
+				if (leer.getResultado()) {
+					App.setRoot("adminHome");
+				} else {
+					utils.Dialog.showError("Error", "No se encontro el Administrador", 
+					"No se encontro el administrador, por favor intente de nuevo con un administrador valido");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
 	void logInCliente(ActionEvent event) {
+		String contrasena = txtContrasena.getText();
+		String usuario = txtUsuario.getText();
+
+		if (contrasena == null && usuario == null) {
+			System.out.println("TA MAL PERRRROOOOOOOOOOOOOOOOO");
+		} else {
+			try {
+				Paquete escribir = new Paquete<>();
+				escribir.setOpcion(11);
+				escribir.setObjeto(new Administrador(usuario, contrasena));
+				oos.writeObject(escribir);
+				Paquete leer = new Paquete<>();
+				if (leer.getResultado()) {
+					App.setRoot("userHome");
+				} else {
+					utils.Dialog.showError("Error", "No se encontro el usuario", 
+					"No se encontro el usuario, por favor intente de nuevo con un usuario valido");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
