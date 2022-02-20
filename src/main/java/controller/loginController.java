@@ -13,6 +13,8 @@ import javafx.scene.control.TextField;
 import model.Administrador;
 import model.Paquete;
 import model.Usuario;
+import utils.AdministradorSingleton;
+import utils.UsuarioSingleton;
 
 public class loginController {
 
@@ -54,13 +56,16 @@ public class loginController {
 			System.out.println("TA MAL PERRRROOOOOOOOOOOOOOOOO");
 		} else {
 			try {
-				Paquete escribir = new Paquete<>();
-				escribir.setOpcion(11);
+				Paquete<Object> escribir = new Paquete<>();
+				escribir.setOpcion(12);
 				escribir.setObjeto(new Usuario(usuario, contrasena));
 				oos.writeObject(escribir);
-				// leemo la respuesta del servidor
+				// leemos la respuesta del servidor
+				socket.close();
 				Paquete leer = new Paquete<>();
 				if (leer.getResultado()) {
+					UsuarioSingleton usuarioSignleton = UsuarioSingleton.getInstance();
+					usuarioSignleton.setUser((Usuario)leer.getObjeto());
 					App.setRoot("adminHome");
 				} else {
 					utils.Dialog.showError("Error", "No se encontro el Administrador", 
@@ -81,12 +86,16 @@ public class loginController {
 			System.out.println("TA MAL PERRRROOOOOOOOOOOOOOOOO");
 		} else {
 			try {
-				Paquete escribir = new Paquete<>();
+				Paquete<Object> escribir = new Paquete<>();
 				escribir.setOpcion(11);
 				escribir.setObjeto(new Administrador(usuario, contrasena));
 				oos.writeObject(escribir);
+				// leemos la respuesta del servidor
+				socket.close();
 				Paquete leer = new Paquete<>();
 				if (leer.getResultado()) {
+					AdministradorSingleton administradorSignleton = AdministradorSingleton.getInstance();
+					administradorSignleton.setAdmin((Administrador)leer.getObjeto());
 					App.setRoot("userHome");
 				} else {
 					utils.Dialog.showError("Error", "No se encontro el usuario", 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="491.0" style="-fx-background-color: #ff6200;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.usuarioHome">
+   <children>
+      <ImageView fitHeight="113.0" fitWidth="228.0" layoutX="146.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../es/iesfranciscodelosrios/imagenes/kisspng-bank-indonesia-pekanbaru-central-bank-kantor-perwa-bank-logo-5b46b758722757.3438162915313611124676.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="264.0" fitWidth="234.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../es/iesfranciscodelosrios/imagenes/kisspng-payday-loan-retirement-credit-pension-5af8e1e7622f83.2862768815262601994022.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="buttVerSaldo" layoutX="220.0" layoutY="187.0" mnemonicParsing="false" onAction="#verSaldo" prefHeight="26.0" prefWidth="198.0" style="-fx-background-color: #0047AB;" text="VER SALDO DE LA CUENTA " textFill="WHITE" />
+      <Button fx:id="buttGestion" layoutX="220.0" layoutY="241.0" mnemonicParsing="false" onAction="#IngresarSacarDInero" prefHeight="26.0" prefWidth="198.0" style="-fx-background-color: #0047AB;" text="INGRESAR O SACAR DINERO" textFill="WHITE" />
+      <ImageView fx:id="ImageViewSalir" fitHeight="53.0" fitWidth="45.0" layoutX="14.0" layoutY="8.0" onMouseClicked="#Salir" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../es/iesfranciscodelosrios/imagenes/back-button.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
