@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -37,24 +38,27 @@ public class verSaldoController {
 	public Socket socket;
 	public OutputStream outputStream;
 	public ObjectOutputStream oos;
+	public ObjectInputStream ois;
 	
 	@FXML
 	public void initialize() {
 		try {
 			socket = new Socket("localhost", 9999);
-			outputStream = socket.getOutputStream();
-			oos = new ObjectOutputStream(outputStream);
+			oos = new ObjectOutputStream(socket.getOutputStream());
+			ois = new ObjectInputStream(socket.getInputStream());
 			Paquete<Object> escribir = new Paquete<>();
 			escribir.setOpcion(2);
 			escribir.setObjeto(UsuarioSingleton.getInstance());
 			oos.writeObject(escribir);
-			//SETEAMOS EL VALOR/RES DE LAS CUENTAS
+			oos.flush();
+			Paquete<Cuenta> leer = (Paquete<Cuenta>) ois.readObject();
+			CBCuentas.getItems().addAll(leer.getObjeto());
 			socket.close();
-			Cuenta cuenta = new Cuenta();
-			CBCuentas.getItems().addAll(cuenta);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
@@ -68,5 +72,6 @@ public class verSaldoController {
     void mostrarSaldo(ActionEvent event) {
 		//seteamos los valores de la cuenta en la tabla
 		Cuenta cuenta = CBCuentas.getValue();
+		
     }
 }

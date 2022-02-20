@@ -8,25 +8,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class usuarioHomeController {
+public class adminHomeController {
 
     @FXML
-    private ImageView ImageViewSalir;
+    private Button buttCrearCliente;
 
     @FXML
-    private Button buttGestion;
+    private Button buttVerClientes;
 
     @FXML
-    private Button buttVerSaldo;
+    private Button buttVerCuentas;
 
     @FXML
-    void IngresarSacarDInero(ActionEvent event) {
-     	FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("IngresarSacarDinero.fxml"));
+    void crearCliente(ActionEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("createUSuario.fxml"));
 		Parent modal;
 		try {
 			modal = fxmlLoader.load();
@@ -44,14 +42,27 @@ public class usuarioHomeController {
     }
 
     @FXML
-    void Salir(MouseEvent event) {
-		Stage stage = (Stage) ImageViewSalir.getScene().getWindow();
-		stage.close();
+    void verClientes(ActionEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("listUsuarios.fxml"));
+		Parent modal;
+		try {
+			modal = fxmlLoader.load();
+			Stage modalStage = new Stage();
+			modalStage.initModality(Modality.APPLICATION_MODAL);
+			modalStage.initOwner(App.rootstage);
+			Scene modalScene = new Scene(modal);
+			modalStage.setScene(modalScene);
+			modalStage.showAndWait();
+			modalStage.setResizable(false);
+		} catch (IOException e) {
+			e.printStackTrace();
+			utils.Dialog.showError("Error", "Error al cargar la pagina", "");
+		}
     }
 
     @FXML
-    void verSaldo(ActionEvent event) {
-     	FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("verSaldo.fxml"));
+    void verCuentas(ActionEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("listCuentas.fxml"));
 		Parent modal;
 		try {
 			modal = fxmlLoader.load();
