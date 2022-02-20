@@ -53,7 +53,8 @@ public class loginController {
 		String usuario = txtUsuario.getText();
 
 		if (contrasena == null && usuario == null) {
-			System.out.println("TA MAL PERRRROOOOOOOOOOOOOOOOO");
+			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contraseña",
+			 "Debe ingresar usuario y contraseña que se encuentran en la base de datos");
 		} else {
 			try {
 				Paquete<Object> escribir = new Paquete<>();
@@ -83,7 +84,8 @@ public class loginController {
 		String usuario = txtUsuario.getText();
 
 		if (contrasena == null && usuario == null) {
-			System.out.println("TA MAL PERRRROOOOOOOOOOOOOOOOO");
+			utils.Dialog.showError("Error", "Debe ingresar nombre de administrador y contraseña",
+			 "Debe ingresar administrador y contraseña que se encuentran en la base de datos");
 		} else {
 			try {
 				Paquete<Object> escribir = new Paquete<>();
