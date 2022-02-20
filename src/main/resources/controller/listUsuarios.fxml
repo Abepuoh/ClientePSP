@@ -30,16 +30,16 @@
          </image>
       </ImageView>
       <Button fx:id="buttCreateCuenta" layoutX="359.0" layoutY="360.0" mnemonicParsing="false" onAction="#createCuenta" style="-fx-background-color: #0047AB;" text="CREAR CUENTA" textFill="WHITE" />
-      <ImageView fx:id="IMBack" fitHeight="42.0" fitWidth="43.0" layoutX="8.0" layoutY="7.0" onMouseClicked="#volver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="8.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/back-button.png" />
          </image>
       </ImageView>
       <TableView fx:id="TVUsuarios" layoutX="116.0" layoutY="88.0" prefHeight="257.0" prefWidth="351.0">
         <columns>
-          <TableColumn fx:id="TCNombre" prefWidth="102.40001678466797" text="NOMBRE" />
-          <TableColumn fx:id="TCApellidos" prefWidth="113.60003662109375" text="APELLIDOS" />
-            <TableColumn fx:id="TCCorreo" prefWidth="137.5999755859375" text="CORREO" />
+          <TableColumn fx:id="TCNombre" prefWidth="127.20000457763672" text="NOMBRE" />
+          <TableColumn fx:id="TCApellidos" prefWidth="121.5999755859375" text="APELLIDOS" />
+            <TableColumn fx:id="TCCorreo" prefWidth="104.0" text="CORREO" />
         </columns>
       </TableView>
    </children>
