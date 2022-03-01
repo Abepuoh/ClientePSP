@@ -31,41 +31,32 @@ public class loginController {
 	@FXML
 	private TextField txtUsuario;
 
-	public Socket socket;
+	
 	public OutputStream outputStream;
 	public ObjectOutputStream oos;
 	public ObjectInputStream ois;
 
 	@FXML
-	public void initialize() {
-		try {
-			socket = new Socket("localhost", 9999);
-			oos = new ObjectOutputStream(socket.getOutputStream());
-			ois = new ObjectInputStream(socket.getInputStream());
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
 	void logInAdmin(ActionEvent event) {
-		String contrasena = txtContrasena.getText();
-		String usuario = txtUsuario.getText();
-
-		if (contrasena == null && usuario == null) {
+		try {
+		Socket socket1 = new Socket("localhost", 9999);
+		ObjectOutputStream oos1 = new ObjectOutputStream(socket1.getOutputStream());
+		ObjectInputStream ois1 = new ObjectInputStream(socket1.getInputStream());
+	
+		String contrasena = this.txtContrasena.getText();
+		String usuario =this.txtUsuario.getText();
+		
+		if (contrasena.isEmpty() & usuario.isEmpty()) {
 			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contraseña",
 			 "Debe ingresar usuario y contraseña que se encuentran en la base de datos");
 		} else {
-			try {
 				Paquete<Object> escribir = new Paquete<>();
 				escribir.setOpcion(12);
 				escribir.setObjeto(new Usuario(usuario, contrasena));
-				oos.writeObject(escribir);
-				oos.flush();
+				oos1.writeObject(escribir);
+				oos1.flush();
 				// leemos la respuesta del servidor
-				Paquete<Object> leer = (Paquete<Object>) ois.readObject();
+				Paquete<Object> leer = (Paquete<Object>) ois1.readObject();
 				if (leer.getResultado()) {
 					UsuarioSingleton usuarioSignleton = UsuarioSingleton.getInstance();
 					usuarioSignleton.setUser((Usuario)leer.getObjeto());
@@ -74,13 +65,13 @@ public class loginController {
 					utils.Dialog.showError("Error", "No se encontro el Administrador", 
 					"No se encontro el administrador, por favor intente de nuevo con un administrador valido");
 				}
-				socket.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				socket1.close();
 			}
-		}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
 	}
 
 	@FXML
@@ -88,7 +79,7 @@ public class loginController {
 		String contrasena = txtContrasena.getText();
 		String usuario = txtUsuario.getText();
 
-		if (contrasena == null && usuario == null) {
+		if (contrasena.isEmpty() & usuario.isEmpty()) {
 			utils.Dialog.showError("Error", "Debe ingresar nombre de administrador y contraseña",
 			 "Debe ingresar administrador y contraseña que se encuentran en la base de datos");
 		} else {
@@ -107,7 +98,7 @@ public class loginController {
 					utils.Dialog.showError("Error", "No se encontro el usuario", 
 					"No se encontro el usuario, por favor intente de nuevo con un usuario valido");
 				}
-				socket.close();
+					//close
 			} catch (IOException e) {
 				e.printStackTrace();
 			}catch (ClassNotFoundException e) {

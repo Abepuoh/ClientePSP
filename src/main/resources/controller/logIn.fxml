@@ -19,7 +19,7 @@
          </image>
       </ImageView>
       <TextField fx:id="txtUsuario" layoutX="226.0" layoutY="175.0" promptText="Usuario" style="-fx-background-color: #0047AB;" />
-      <TextField fx:id="txtContraseña" layoutX="226.0" layoutY="219.0" promptText="Contraseña" style="-fx-background-color: #0047AB;" />
+      <TextField fx:id="txtContrasena" layoutX="226.0" layoutY="219.0" promptText="Contraseña" style="-fx-background-color: #0047AB;" />
       <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="185.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/email.png" />
