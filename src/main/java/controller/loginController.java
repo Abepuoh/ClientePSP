@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.Administrador;
+import model.ClientManager;
 import model.Paquete;
 import model.Usuario;
 import utils.AdministradorSingleton;
@@ -38,11 +39,7 @@ public class loginController {
 
 	@FXML
 	void logInAdmin(ActionEvent event) {
-		try {
-		Socket socket1 = new Socket("localhost", 9999);
-		ObjectOutputStream oos1 = new ObjectOutputStream(socket1.getOutputStream());
-		ObjectInputStream ois1 = new ObjectInputStream(socket1.getInputStream());
-	
+		ClientManager cm = new ClientManager("localhost",9999);
 		String contrasena = this.txtContrasena.getText();
 		String usuario =this.txtUsuario.getText();
 		
@@ -52,30 +49,29 @@ public class loginController {
 		} else {
 				Paquete<Object> escribir = new Paquete<>();
 				escribir.setOpcion(12);
-				escribir.setObjeto(new Usuario(usuario, contrasena));
-				oos1.writeObject(escribir);
-				oos1.flush();
+				escribir.setObjeto(new Administrador(usuario, contrasena));
+				cm.sendObjectToServer(escribir);
 				// leemos la respuesta del servidor
-				Paquete<Object> leer = (Paquete<Object>) ois1.readObject();
+				Paquete<Object> leer = (Paquete<Object>) cm.getObjectFromServer();
 				if (leer.getResultado()) {
-					UsuarioSingleton usuarioSignleton = UsuarioSingleton.getInstance();
-					usuarioSignleton.setUser((Usuario)leer.getObjeto());
-					App.setRoot("adminHome");
+					AdministradorSingleton administradorSignleton = AdministradorSingleton.getInstance();
+					administradorSignleton.setAdmin((Administrador)leer.getObjeto());
+					try {
+						App.setRoot("usuarioHome");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
-					utils.Dialog.showError("Error", "No se encontro el Administrador", 
-					"No se encontro el administrador, por favor intente de nuevo con un administrador valido");
+					utils.Dialog.showError("Error", "No se encontro el usuario", 
+					"No se encontro el usuario, por favor intente de nuevo con un usuario valido");
 				}
-				socket1.close();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} 
 	}
 
 	@FXML
 	void logInCliente(ActionEvent event) {
+		ClientManager cm = new ClientManager("localhost",9999);
 		String contrasena = txtContrasena.getText();
 		String usuario = txtUsuario.getText();
 
@@ -88,20 +84,21 @@ public class loginController {
 				escribir.setOpcion(11);
 				escribir.setObjeto(new Administrador(usuario, contrasena));
 				oos.writeObject(escribir);
-				oos.flush();
-				Paquete<Object> leer = (Paquete<Object>) ois.readObject();
+				Paquete<Object> leer = (Paquete<Object>) cm.getObjectFromServer();
 				if (leer.getResultado()) {
-					AdministradorSingleton administradorSignleton = AdministradorSingleton.getInstance();
-					administradorSignleton.setAdmin((Administrador)leer.getObjeto());
-					App.setRoot("usuarioHome");
-				} else {
-					utils.Dialog.showError("Error", "No se encontro el usuario", 
-					"No se encontro el usuario, por favor intente de nuevo con un usuario valido");
+					UsuarioSingleton usuarioSignleton = UsuarioSingleton.getInstance();
+					usuarioSignleton.setUser((Usuario)leer.getObjeto());
+					try {
+						App.setRoot("adminHome");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else {
+						
 				}
 					//close
 			} catch (IOException e) {
-				e.printStackTrace();
-			}catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
