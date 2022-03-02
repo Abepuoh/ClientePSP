@@ -51,11 +51,15 @@ public class loginController {
 				escribir.setOpcion(12);
 				escribir.setObjeto(new Administrador(usuario, contrasena));
 				cm.sendObjectToServer(escribir);
+				System.out.println("hola");
 				// leemos la respuesta del servidor
-				Paquete<Object> leer = (Paquete<Object>) cm.getObjectFromServer();
-				if (leer.getResultado()) {
+				Object leer = cm.getObjectFromServer();
+				@SuppressWarnings("unchecked")
+				Paquete<Administrador> a =(Paquete<Administrador>) leer;
+				System.out.println(a.getResultado());
+				if (a.getResultado()) {
 					AdministradorSingleton administradorSignleton = AdministradorSingleton.getInstance();
-					administradorSignleton.setAdmin((Administrador)leer.getObjeto());
+					administradorSignleton.setAdmin((Administrador)a.getObjeto());
 					try {
 						App.setRoot("usuarioHome");
 					} catch (IOException e) {
