@@ -41,7 +41,7 @@ public class Usuario implements Serializable {
 	@Column(name = "password")
 	private String password;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch=FetchType.EAGER,mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Cuenta> cuentas;
 	
 	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)

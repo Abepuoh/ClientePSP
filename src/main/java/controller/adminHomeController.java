@@ -8,10 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class adminHomeController {
+
+	@FXML
+    private ImageView Volver;
 
     @FXML
     private Button buttCrearCliente;
@@ -77,6 +82,10 @@ public class adminHomeController {
 			e.printStackTrace();
 			utils.Dialog.showError("Error", "Error al cargar la pagina", "");
 		}
+    }
+	@FXML
+    void volver(MouseEvent event) {
+		this.Volver.getScene().getWindow().hide();
     }
 
 }

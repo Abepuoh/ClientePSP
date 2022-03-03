@@ -1,12 +1,11 @@
 package controller;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.util.List;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,72 +14,84 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Administrador;
+import model.ClientManager;
 import model.Paquete;
 import model.Usuario;
+import utils.AdministradorSingleton;
 
 public class listUsuariosController {
 
-    @FXML
-    private TableColumn<Usuario, String> TCApellidos;
+	@FXML
+	private ImageView Volver;
 
-    @FXML
-    private TableColumn<Usuario, String> TCCorreo;
+	@FXML
+	private TableColumn<Usuario, String> TCApellidos;
 
-    @FXML
-    private TableColumn<Usuario, String> TCNombre;
+	@FXML
+	private TableColumn<Usuario, String> TCCorreo;
 
-    @FXML
-    private TableView<Usuario> TVUsuarios;
+	@FXML
+	private TableColumn<Usuario, String> TCNombre;
 
-    @FXML
-    private Button buttCreateCuenta;
+	@FXML
+	private TableView<Usuario> TVUsuarios;
 
-    public Socket socket;
-	public OutputStream outputStream;
-	public ObjectOutputStream oos;
-	public ObjectInputStream ois;
-    
-    @FXML
+	@FXML
+	private Button buttCreateCuenta;
+
+	public static Usuario usuarioS;
+	private ObservableList<Usuario> listaUsuarios;
+
+	@FXML
 	public void initialize() {
-        try {
-            socket = new Socket("localhost", 9999);
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(socket.getInputStream());
-            Paquete<Object> escribir = new Paquete<>();
-            escribir.setOpcion(7);
-            oos.writeObject(escribir);
-            oos.flush();
-            Paquete<Usuario> leer = (Paquete<Usuario>) ois.readObject();
-            TVUsuarios.getItems().addAll(leer.getObjeto());
-            socket.close();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    void createCuenta(ActionEvent event) {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("createUsuario.fxml"));
-		Parent modal;
-		try {
-			modal = fxmlLoader.load();
-			Stage modalStage = new Stage();
-			modalStage.initModality(Modality.APPLICATION_MODAL);
-			modalStage.initOwner(App.rootstage);
-			Scene modalScene = new Scene(modal);
-			modalStage.setScene(modalScene);
-			modalStage.showAndWait();
-			modalStage.setResizable(false);
-		} catch (IOException e) {
-			e.printStackTrace();
-			utils.Dialog.showError("Error", "Error al cargar la pagina", "");
-		}
-    }
+		ClientManager cm = new ClientManager("localhost", 9999);
+		Paquete<Administrador> escribir = new Paquete<>();
+		Administrador admin = AdministradorSingleton.getInstance().getAdmin();
+		escribir.setOpcion(7);
+		escribir.setObjeto(admin);
+		cm.sendObjectToServer(escribir);
+		Object leer = cm.getObjectFromServer();
+		Paquete<List<Usuario>> a = (Paquete<List<Usuario>>) leer;
+		List<Usuario> lista = a.getObjeto();
+		listaUsuarios = FXCollections.observableArrayList(lista);
+		TVUsuarios.setItems(listaUsuarios);
+		TCApellidos.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getApellidos()));
+		TCNombre.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNombre()));
+		TCCorreo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCorreo()));
+		// cuando hagamos doble click en una fila, se abrira una ventana con para crear
+		// una cuenta y le pasamos el usuario seleccionado
+		TVUsuarios.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				Usuario usuario =TVUsuarios.getSelectionModel().getSelectedItem();
+				if (usuario != null) {
+					crearCuentaController.setUsuario(TVUsuarios.getSelectionModel().getSelectedItem());
+					FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("createCuenta.fxml"));
+					Parent modal;
+					try {
+						modal = fxmlLoader.load();
+						Stage modalStage = new Stage();
+						modalStage.initModality(Modality.APPLICATION_MODAL);
+						modalStage.initOwner(App.rootstage);
+						Scene modalScene = new Scene(modal);
+						modalStage.setScene(modalScene);
+						modalStage.showAndWait();
+						modalStage.setResizable(false);
+					} catch (IOException e) {
+						e.printStackTrace();
+						utils.Dialog.showError("Error", "Error al cargar la pagina", "");
+					}
+				}
+			}
+		});
+	}
 
+	@FXML
+	void volver(MouseEvent event) {
+		this.Volver.getScene().getWindow().hide();
+	}
 }
-

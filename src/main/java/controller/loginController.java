@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 import javafx.event.ActionEvent;
@@ -31,8 +29,6 @@ public class loginController {
 	private TextField txtUsuario;
 
 	public OutputStream outputStream;
-	public ObjectOutputStream oos;
-	public ObjectInputStream ois;
 
 	@FXML
 	void logInAdmin(ActionEvent event) {
@@ -41,8 +37,8 @@ public class loginController {
 		String usuario = this.txtUsuario.getText();
 
 		if (contrasena.isEmpty() & usuario.isEmpty()) {
-			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contraseña",
-					"Debe ingresar usuario y contraseña que se encuentran en la base de datos");
+			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contrasena",
+					"Debe ingresar usuario y contrasena que se encuentran en la base de datos");
 		} else {
 			Paquete<Administrador> escribir = new Paquete<>(); 
 			escribir.setOpcion(12);
@@ -73,8 +69,8 @@ public class loginController {
 		String usuario = this.txtUsuario.getText();
 
 		if (contrasena.isEmpty() & usuario.isEmpty()) {
-			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contraseña",
-					"Debe ingresar usuario y contraseña que se encuentran en la base de datos");
+			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contrasena",
+					"Debe ingresar usuario y contrasena que se encuentran en la base de datos");
 		} else {
 			Paquete<Usuario> escribir = new Paquete<>();
 			escribir.setOpcion(11);

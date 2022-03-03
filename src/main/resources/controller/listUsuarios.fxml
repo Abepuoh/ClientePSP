@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="491.0" style="-fx-background-color: #ff6200;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.listUsuariosController">
    <children>
@@ -29,8 +29,7 @@
             <Image url="@../imagenes/candado.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttCreateCuenta" layoutX="359.0" layoutY="360.0" mnemonicParsing="false" onAction="#createCuenta" style="-fx-background-color: #0047AB;" text="CREAR CUENTA" textFill="WHITE" />
-      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="8.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="Volver" fitHeight="42.0" fitWidth="43.0" layoutX="8.0" layoutY="7.0" onMouseClicked="#volver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/back-button.png" />
          </image>
@@ -42,5 +41,6 @@
             <TableColumn fx:id="TCCorreo" prefWidth="104.0" text="CORREO" />
         </columns>
       </TableView>
+      <Text layoutX="8.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HAZ DOBLE CLICK EN EL USUARIO PARA CREARLE UNA CUENTA" textAlignment="CENTER" wrappingWidth="107.20001983642578" />
    </children>
 </AnchorPane>
