@@ -4,16 +4,48 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Usuario")
+@NamedQueries({
+	@NamedQuery(name="getAllUsers", query="SELECT u FROM Usuario u"),
+	@NamedQuery(name="getUsuarioByNombrePassword", query="SELECT u FROM Usuario u WHERE u.nombre = :nombre AND u.password = :password")
+})
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
+	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "apellidos")
 	private String apellidos;
+	@Column(name = "correo")
 	private String correo;
+	@Column(name = "password")
 	private String password;
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Cuenta> cuentas;
+	
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name="idAdministrador")
 	private Administrador administrador;
 
 	public Usuario(Long id, String nombre, String apellidos, String correo, String password, List<Cuenta> cuentas,
@@ -122,4 +154,6 @@ public class Usuario implements Serializable {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", correo=" + correo
 				+ ", password=" + password + ", cuentas=" + cuentas + ", administrador=" + administrador + "]";
 	}
+
+
 }

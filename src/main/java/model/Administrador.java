@@ -4,19 +4,42 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Administrador implements Serializable {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "Administrador")
+@NamedQueries({
+	@NamedQuery(name="getAdminByNombrePassword", query="SELECT a FROM Administrador a WHERE a.nombre = :nombre AND a.password = :password"),
+})
+public class Administrador implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
+	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "apellidos")
 	private String apellidos;
+	@Column(name = "correo")
 	private String correo;
+	@Column(name = "password")
 	private String password;
-
-	List<Usuario> usuario;
 	
+	@OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<Usuario>usuario;
+
 	public Administrador(Long id, String nombre, String apellidos, String correo, String password,
 			List<Usuario> usuario) {
 		super();
@@ -109,5 +132,5 @@ public class Administrador implements Serializable {
 	public String toString() {
 		return "Administrador [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", correo=" + correo
 				+ ", password=" + password + "]";
-	}
+	}	
 }

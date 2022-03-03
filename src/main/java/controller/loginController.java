@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.Administrador;
 import model.ClientManager;
+import model.Cuenta;
 import model.Paquete;
 import model.Usuario;
 import utils.AdministradorSingleton;
@@ -84,7 +87,12 @@ public class loginController {
 		} else {
 			Paquete<Usuario> escribir = new Paquete<>();
 			escribir.setOpcion(11);
-			escribir.setObjeto(new Usuario(usuario, contrasena));
+			Usuario u = new Usuario(usuario, contrasena);
+			Cuenta c = new Cuenta(-1L, "12", 10.0, u);
+			List<Cuenta> lis = new ArrayList<Cuenta>();
+			lis.add(c);
+			u.setCuentas(lis);
+			escribir.setObjeto(u);
 			cm.sendObjectToServer(escribir);
 			System.out.println("Entro en logInCliente");
 			// leemos la respuesta del servidor
