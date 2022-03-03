@@ -59,6 +59,9 @@ public class Usuario implements Serializable {
 		this.administrador = administrador;
 
 	}
+	public Usuario(String nombre, String apellidos, String correo, String password, Administrador administrador) {
+		this(-1L, nombre, apellidos, correo, password, new ArrayList<Cuenta>(), administrador);
+	}
 	
 	public Usuario(String nombre, String pass) {
 		this(-1L,nombre,"default","default",pass, new ArrayList<Cuenta>(), new Administrador());

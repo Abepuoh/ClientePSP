@@ -50,6 +50,9 @@ public class Administrador implements Serializable {
 		this.password = password;
 		this.usuario = usuario;
 	}
+	public Administrador(String nombre, String password) {
+		this(-1L, nombre, "default", "default", password, new ArrayList<Usuario>());
+	}
 
 	public Administrador() {
 		this(-1L, "default", "default", "default", "default", new ArrayList<Usuario>());
