@@ -46,7 +46,6 @@ public class loginController {
 		} else {
 			Paquete<Administrador> escribir = new Paquete<>(); 
 			escribir.setOpcion(12);
-			escribir.setObjeto(new Administrador(usuario, contrasena));
 			cm.sendObjectToServer(escribir);
 			Object leer = cm.getObjectFromServer();
 			Paquete<Administrador> a = (Paquete<Administrador>) leer;
@@ -76,24 +75,20 @@ public class loginController {
 			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contraseña",
 					"Debe ingresar usuario y contraseña que se encuentran en la base de datos");
 		} else {
+			// Creamos un paquete y lo adecuamos para el login y lo enviamos
 			Paquete<Usuario> escribir = new Paquete<>();
 			escribir.setOpcion(11);
-			Usuario u = new Usuario(usuario, contrasena);
-			escribir.setObjeto(u);
+			escribir.setObjeto(new Usuario(usuario, contrasena));
 			cm.sendObjectToServer(escribir);
-			System.out.println("Entro en logInCliente");
-			// leemos la respuesta del servidor
+			// Leemos la respuesta del servidor
 			Object leer = cm.getObjectFromServer();
-			System.out.println(leer.toString());
 			Paquete<Usuario> a = (Paquete<Usuario>) leer;
-			System.out.println(a.getResultado());
+			//Si el usuario devuelto es correcto, lo seteamos al singleton.
 			if (a.getResultado()) {
 				UsuarioSingleton usuarioSingleton = UsuarioSingleton.getInstance();
-				a.getObjeto().setId((long) a.getCantidad());
 				usuarioSingleton.setUser(a.getObjeto());
-				System.out.println(usuarioSingleton.getUser());
 				try {
-					App.setRoot("usuarioHome");
+					App.setRoot("IngresarSacarDinero");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

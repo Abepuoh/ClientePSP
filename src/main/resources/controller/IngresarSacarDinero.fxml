@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -11,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="491.0" style="-fx-background-color: #ff6200;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IngresarSacarDineroController">
    <children>
-      <ImageView fitHeight="113.0" fitWidth="228.0" layoutX="146.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="88.0" fitWidth="187.0" layoutX="162.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/kisspng-bank-indonesia-pekanbaru-central-bank-kantor-perwa-bank-logo-5b46b758722757.3438162915313611124676.png" />
          </image>
@@ -26,11 +25,10 @@
             <Image url="@../es/iesfranciscodelosrios/imagenes/back-button.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="CBCuentas" layoutX="207.0" layoutY="122.0" onAction="#mostrarSaldo" prefHeight="27.0" prefWidth="186.0" promptText="SELECCIONE UNA CUENTA" />
-      <TableView fx:id="TBVerCuentas" layoutX="151.0" layoutY="171.0" prefHeight="58.0" prefWidth="297.0">
+      <TableView fx:id="TBVerCuentas" layoutX="151.0" layoutY="91.0" prefHeight="158.0" prefWidth="298.0">
         <columns>
-          <TableColumn fx:id="TCNumero" prefWidth="221.5999755859375" text="NUMERO" />
-            <TableColumn fx:id="TBSaldo" prefWidth="75.20001220703125" text="SALDO" />
+          <TableColumn fx:id="TCNumero" prefWidth="151.20001220703125" text="NUMERO" />
+            <TableColumn fx:id="TBSaldo" prefWidth="146.39996337890625" text="SALDO" />
         </columns>
       </TableView>
       <Button fx:id="buttSacar" layoutX="214.0" layoutY="336.0" mnemonicParsing="false" onAction="#SacarDInero" prefHeight="26.0" prefWidth="198.0" style="-fx-background-color: #0047AB;" text="SACAR DINERO" textFill="WHITE" />
