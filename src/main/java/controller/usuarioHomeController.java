@@ -12,6 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Usuario;
+import utils.UsuarioSingleton;
 
 public class usuarioHomeController {
 
@@ -23,6 +25,14 @@ public class usuarioHomeController {
 
     @FXML
     private Button buttVerSaldo;
+    
+    private Usuario currentUser;
+    
+    public void initialize() {
+    	
+    	this.currentUser = UsuarioSingleton.getInstance().getUser();
+    	System.out.println(this.currentUser);
+    }
 
     @FXML
     void IngresarSacarDInero(ActionEvent event) {

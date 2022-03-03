@@ -27,28 +27,9 @@ public class Usuario implements Serializable {
 		this.administrador = administrador;
 
 	}
-	public Usuario (String nombre, String apellidos, String correo, String password){
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.correo = correo;
-		this.password = password;
-		this.cuentas = new ArrayList<Cuenta>();
-	}
-	public Usuario(Long id, String nombre, String apellidos, String correo, String password) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.correo = correo;
-		this.password = password;
-		this.cuentas = new ArrayList<Cuenta>();
-	}
-
-	public Usuario(String nombre, String password) {
-		super();
-		this.nombre = nombre;
-		this.password = password;
-		this.cuentas = new ArrayList<Cuenta>();
+	
+	public Usuario(String nombre, String pass) {
+		this(-1L,nombre,"default","default",pass, new ArrayList<Cuenta>(), new Administrador());
 	}
 
 	public Usuario() {
@@ -139,6 +120,6 @@ public class Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", correo=" + correo
-				+ ", password=" + password + "]";
+				+ ", password=" + password + ", cuentas=" + cuentas + ", administrador=" + administrador + "]";
 	}
 }

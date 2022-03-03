@@ -17,12 +17,6 @@ public class Administrador implements Serializable {
 
 	List<Usuario> usuario;
 	
-	public Administrador(String nombre, String password) {
-		super();
-		this.nombre = nombre;
-		this.password = password;
-	}
-
 	public Administrador(Long id, String nombre, String apellidos, String correo, String password,
 			List<Usuario> usuario) {
 		super();
@@ -114,6 +108,6 @@ public class Administrador implements Serializable {
 	@Override
 	public String toString() {
 		return "Administrador [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", correo=" + correo
-				+ ", password=" + password + ", usuario=" + usuario + "]";
+				+ ", password=" + password + "]";
 	}
 }

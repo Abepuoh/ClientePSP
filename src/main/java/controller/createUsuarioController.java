@@ -25,7 +25,7 @@ public class createUsuarioController {
     private TextField TFApellidos;
 
     @FXML
-    private TextField TFContraseña;
+    private TextField TFContraseÃ±a;
 
     @FXML
     private TextField TFEmail;
@@ -59,7 +59,7 @@ public class createUsuarioController {
         String nombre = TFNombre.getText();
         String apellidos = TFApellidos.getText();
         String email = TFEmail.getText();
-        String contrasena = TFContraseña.getText();
+        String contrasena = TFContraseÃ±a.getText();
 
         if(nombre==null && apellidos==null && email==null && contrasena==null){
             utils.Dialog.showError("Error", "Debe ingresar nombre, apellidos, email y contrasena",
@@ -68,7 +68,7 @@ public class createUsuarioController {
             try{
                 Paquete<Usuario> paquete = new Paquete();
                 paquete.setOpcion(5);
-                paquete.setObjeto(new Usuario(nombre, apellidos, email, contrasena));
+                paquete.setObjeto(new Usuario(null, nombre, apellidos, email, contrasena, null, null));
                 oos.writeObject(paquete);
                 oos.flush();
                 paquete = (Paquete) ois.readObject();

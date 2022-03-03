@@ -3,35 +3,53 @@ package model;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ClientManager {
-    private String server;
-    private int port;
+	private String server;
+	private int port;
 
-    private ObjectInputStream inputObjectStream = null; 
-    private ObjectOutputStream outputObjectStream = null; 
+	private Object obj;
+	private Socket socket = null;
 
-    public ClientManager(String server,int port){
-        this.server = server;
-        this.port = port;
-    }
+	private ObjectInputStream inputStream = null;
+	private ObjectOutputStream outputStream = null;
 
-    public void sendObjectToServer(Object obj){
-        try(Socket socket = new Socket(server,port)){
+	public ClientManager(String server, int port) {
+		this.server = server;
+		this.port = port;
+	}
 
-            outputObjectStream = new ObjectOutputStream(socket.getOutputStream());
-            outputObjectStream.writeObject(obj);
+	public void sendObjectToServer(Object obj) {
+		try{
+			this.socket = new Socket(server, port);
+			outputStream = new ObjectOutputStream(socket.getOutputStream());
+			outputStream.writeObject(obj);
 
-            outputObjectStream.flush();
-            outputObjectStream.close();
+			outputStream.flush();
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 
-    public Object getObjectFromServer(){
-        return new Object();
-    }
+	public Object getObjectFromServer() {
+			try {
+				System.out.println("Linea antes del input");
+				inputStream = new ObjectInputStream(socket.getInputStream());
+				System.out.println("Linea despues del input");
+				obj = inputStream.readObject();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		return obj;
+
+	}
 }

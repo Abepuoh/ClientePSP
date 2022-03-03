@@ -80,11 +80,7 @@ public class Cuenta implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Cuenta [id=" + id + ", numero=" + numero + ", saldo=" + saldo + ", usuario=" + usuario + "]";
+		return "Cuenta [id=" + id + ", numero=" + numero + ", saldo=" + saldo + "]";
 	}
-
-    public Object getNumeroCuentaProperty() {
-        return null;
-    }
 	
 }

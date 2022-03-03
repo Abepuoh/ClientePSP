@@ -32,81 +32,82 @@ public class loginController {
 	@FXML
 	private TextField txtUsuario;
 
-	
 	public OutputStream outputStream;
 	public ObjectOutputStream oos;
 	public ObjectInputStream ois;
 
 	@FXML
 	void logInAdmin(ActionEvent event) {
-		ClientManager cm = new ClientManager("localhost",9999);
+		ClientManager cm = new ClientManager("localhost", 9999);
 		String contrasena = this.txtContrasena.getText();
-		String usuario =this.txtUsuario.getText();
-		
+		String usuario = this.txtUsuario.getText();
+
 		if (contrasena.isEmpty() & usuario.isEmpty()) {
 			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contraseña",
-			 "Debe ingresar usuario y contraseña que se encuentran en la base de datos");
+					"Debe ingresar usuario y contraseña que se encuentran en la base de datos");
 		} else {
-				Paquete<Object> escribir = new Paquete<>();
-				escribir.setOpcion(12);
-				escribir.setObjeto(new Administrador(usuario, contrasena));
-				cm.sendObjectToServer(escribir);
-				System.out.println("hola");
-				// leemos la respuesta del servidor
-				Object leer = cm.getObjectFromServer();
-				@SuppressWarnings("unchecked")
-				Paquete<Administrador> a =(Paquete<Administrador>) leer;
-				System.out.println(a.getResultado());
-				if (a.getResultado()) {
-					AdministradorSingleton administradorSignleton = AdministradorSingleton.getInstance();
-					administradorSignleton.setAdmin((Administrador)a.getObjeto());
-					try {
-						App.setRoot("usuarioHome");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} else {
-					utils.Dialog.showError("Error", "No se encontro el usuario", 
-					"No se encontro el usuario, por favor intente de nuevo con un usuario valido");
+			Paquete<Object> escribir = new Paquete<>();
+			escribir.setOpcion(12);
+			//escribir.setObjeto(new Administrador(usuario, contrasena));
+			cm.sendObjectToServer(escribir);
+			System.out.println("hola");
+			// leemos la respuesta del servidor
+			Object leer = cm.getObjectFromServer();
+			System.out.println(leer.toString());
+			Paquete<Administrador> a = (Paquete<Administrador>) leer;
+			System.out.println(a.getResultado());
+			if (a.getResultado()) {
+				AdministradorSingleton administradorSignleton = AdministradorSingleton.getInstance();
+				administradorSignleton.setAdmin((Administrador) a.getObjeto());
+				try {
+					App.setRoot("adminHome");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+			} else {
+				utils.Dialog.showError("Error", "No se encontro el usuario",
+						"No se encontro el usuario, por favor intente de nuevo con un usuario valido");
 			}
+		}
 	}
 
 	@FXML
 	void logInCliente(ActionEvent event) {
-		ClientManager cm = new ClientManager("localhost",9999);
-		String contrasena = txtContrasena.getText();
-		String usuario = txtUsuario.getText();
+		ClientManager cm = new ClientManager("localhost", 9999);
+		String contrasena = this.txtContrasena.getText();
+		String usuario = this.txtUsuario.getText();
 
 		if (contrasena.isEmpty() & usuario.isEmpty()) {
-			utils.Dialog.showError("Error", "Debe ingresar nombre de administrador y contraseña",
-			 "Debe ingresar administrador y contraseña que se encuentran en la base de datos");
+			utils.Dialog.showError("Error", "Debe ingresar nombre de usuario y contraseña",
+					"Debe ingresar usuario y contraseña que se encuentran en la base de datos");
 		} else {
-			try {
-				Paquete<Object> escribir = new Paquete<>();
-				escribir.setOpcion(11);
-				escribir.setObjeto(new Administrador(usuario, contrasena));
-				oos.writeObject(escribir);
-				Paquete<Object> leer = (Paquete<Object>) cm.getObjectFromServer();
-				if (leer.getResultado()) {
-					UsuarioSingleton usuarioSignleton = UsuarioSingleton.getInstance();
-					usuarioSignleton.setUser((Usuario)leer.getObjeto());
-					try {
-						App.setRoot("adminHome");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}else {
-						
+			Paquete<Usuario> escribir = new Paquete<>();
+			escribir.setOpcion(11);
+			escribir.setObjeto(new Usuario(usuario, contrasena));
+			cm.sendObjectToServer(escribir);
+			System.out.println("Entro en logInCliente");
+			// leemos la respuesta del servidor
+			Object leer = cm.getObjectFromServer();
+			System.out.println(leer.toString());
+			Paquete<Usuario> a = (Paquete<Usuario>) leer;
+			System.out.println(a.getResultado());
+			if (a.getResultado()) {
+				UsuarioSingleton usuarioSingleton = UsuarioSingleton.getInstance();
+				a.getObjeto().setId((long) a.getCantidad());
+				usuarioSingleton.setUser(a.getObjeto());
+				System.out.println(usuarioSingleton.getUser());
+				try {
+					App.setRoot("usuarioHome");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-					//close
-			} catch (IOException e) {
-				e.printStackTrace();
+			} else {
+				utils.Dialog.showError("Error", "No se encontro el usuario",
+						"No se encontro el usuario, por favor intente de nuevo con un usuario valido");
 			}
 		}
-
 	}
 
 }
