@@ -1,12 +1,9 @@
 package controller;
+import java.util.List;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,9 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.ClientManager;
 import model.Cuenta;
 import model.Paquete;
-import model.Usuario;
 
 public class listCuentasController {
 
@@ -33,42 +30,35 @@ public class listCuentasController {
     private TableColumn<Cuenta, Double> TCSaldo;
 
     @FXML
-    private TableColumn<Cuenta, Usuario> TCUsuario;
+    private TableColumn<Cuenta, String> TCUsuario;
 
     @FXML
     private Button buttBorrarCuenta;
 
-    public Socket socket;
-	public OutputStream outputStream;
-	public ObjectOutputStream oos;
-	public ObjectInputStream ois;
-    
     @FXML
 	public void initialize() {
-		try {
-			socket = new Socket("localhost", 9999);
-			oos = new ObjectOutputStream(socket.getOutputStream());
-			ois = new ObjectInputStream(socket.getInputStream());
-            //Enviamos el paquete con el tipo de operacion
-            Paquete paquete = new Paquete();
-            paquete.setOpcion(2);
-            oos.writeObject(paquete);
-            oos.flush();
-            //Recibimos la lista de usuarios
-            paquete = (Paquete) ois.readObject();
-            if(paquete.getResultado()){
-                //SETEAMOS LAS COSAS EN LOS COSOS
-            }else{
-                utils.Dialog.showError("Error", "No se pudo obtener la lista de cuentas", "");
+        //disable button hasta que se seleccione una cuenta
+        buttBorrarCuenta.setDisable(true);
+		ClientManager cm = new ClientManager("localhost", 9999);
+        Paquete<Cuenta> escribir = new Paquete<>();
+        escribir.setOpcion(10);
+        cm.sendObjectToServer(escribir);
+        Object leer = cm.getObjectFromServer();
+        Paquete<List<Cuenta>> a = (Paquete<List<Cuenta>>) leer;
+        List<Cuenta> lista = a.getObjeto();
+        ObservableList<Cuenta> listaCuentas = FXCollections.observableArrayList(lista);
+        TCCuentas.setItems(listaCuentas);
+        TCNumero.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNumero()));
+        TCSaldo.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getSaldo()));
+        TCUsuario.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getUsuario().getNombre()));
+        TCCuentas.setOnMouseClicked((MouseEvent event) -> {
+            Cuenta cuenta = TCCuentas.getSelectionModel().getSelectedItem();
+            if (cuenta != null) {
+                buttBorrarCuenta.setDisable(false);
             }
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-	}
+        });
+    }
+    
     @FXML
     void volver(MouseEvent event) {
         IMVolver.getScene().getWindow().hide();
@@ -76,30 +66,20 @@ public class listCuentasController {
     
     @FXML
     void borrarCuenta(ActionEvent event) {
-        //seleccionar la cuenta a borrar
-        Cuenta cuenta = TCCuentas.getSelectionModel().getSelectedItem();
-        if(cuenta != null){
-            //Enviamos el paquete con el tipo de operacion
-            Paquete paquete = new Paquete();
-            paquete.setOpcion(9);
-            paquete.setObjeto(cuenta);
-            try {
-                oos.writeObject(paquete);
-                oos.flush();
-                //Recibimos la lista de usuarios
-                paquete = (Paquete) ois.readObject();
-                if(paquete.getResultado()){
-                    //SETEAMOS LAS COSAS EN LOS COSOS
-                }else{
-                    utils.Dialog.showError("Error", "No se pudo borrar la cuenta", "");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }else{
-            utils.Dialog.showError("Error", "No se selecciono ninguna cuenta", "");
-        }
+       ClientManager cm = new ClientManager("localhost", 9999);
+       Cuenta cuenta = TCCuentas.getSelectionModel().getSelectedItem();
+       Long id = TCCuentas.getSelectionModel().getSelectedItem().getId();
+       Paquete<Long> escribir = new Paquete<>();
+       escribir.setOpcion(9);
+       escribir.setObjeto(id);
+       cm.sendObjectToServer(escribir);
+       Object leer = cm.getObjectFromServer();
+       Paquete<Cuenta> a = (Paquete<Cuenta>) leer;
+       if(a.getResultado()){
+           utils.Dialog.showConfirm("Cuenta borrada", "La cuenta se ha borrado correctamente", null);
+           TCCuentas.getItems().remove(cuenta);
+       }else{
+        utils.Dialog.showError("Error", "No se pudo borrar la cuenta", null);
+       }
     }
 }

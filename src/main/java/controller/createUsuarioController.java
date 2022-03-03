@@ -1,12 +1,5 @@
 package controller;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,7 +21,7 @@ public class createUsuarioController {
     private TextField TFApellidos;
 
     @FXML
-    private TextField TFContraseña;
+    private TextField TFContrasena;
 
     @FXML
     private TextField TFEmail;
@@ -39,10 +32,6 @@ public class createUsuarioController {
     @FXML
     private Button buttCrear;
 
-    public Socket socket;
-	public OutputStream outputStream;
-	public ObjectOutputStream oos;
-	public ObjectInputStream ois;
     
     @FXML
     void crearUsuario(ActionEvent event) {
@@ -50,7 +39,7 @@ public class createUsuarioController {
         String nombre = TFNombre.getText();
         String apellidos = TFApellidos.getText();
         String email = TFEmail.getText();
-        String contrasena = TFContraseña.getText();
+        String contrasena = TFContrasena.getText();
 
         if(nombre==null && apellidos==null && email==null && contrasena==null){
             utils.Dialog.showError("Error", "Debe ingresar nombre, apellidos, email y contrasena",

@@ -31,14 +31,17 @@ public class Cuenta implements Serializable {
 	private String numero;
 	@Column(name = "saldo")
 	private Double saldo;
-	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name="idUsuario")
-	private Usuario usuario;
+	private Usuario usuario; 
 	
 	public Cuenta() {
 		this(-1L,"default",-1.1,new Usuario());
 	}
 	
+	public Cuenta(String numero, Double saldo, Usuario usuario) {
+		this(-1L,numero,saldo,usuario);
+	}
 	public Cuenta(Long id, String numero, Double saldo, Usuario usuario) {
 		super();
 		this.id = id;

@@ -30,22 +30,22 @@
             <Image url="@../es/iesfranciscodelosrios/imagenes/hombre.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttCrear" layoutX="304.0" layoutY="372.0" mnemonicParsing="false" onAction="#crearUsuario" style="-fx-background-color: #0047AB;" text="CREAR" textFill="WHITE" />
-      <TextField fx:id="TFEmail" layoutX="225.0" layoutY="264.0" prefHeight="26.0" prefWidth="210.0" promptText="Email" style="-fx-background-color: #0047AB;" />
-      <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="184.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="buttCrear" layoutX="294.0" layoutY="347.0" mnemonicParsing="false" onAction="#crearUsuario" prefHeight="26.0" prefWidth="73.0" style="-fx-background-color: #0047AB;" text="CREAR" textFill="WHITE" />
+      <ImageView fx:id="IMvolver" fitHeight="40.0" fitWidth="43.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#volver" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../es/iesfranciscodelosrios/imagenes/email.png" />
+            <Image url="@../es/iesfranciscodelosrios/imagenes/back-button.png" />
          </image>
       </ImageView>
-      <TextField fx:id="TFContraseña" layoutX="226.0" layoutY="305.0" prefHeight="26.0" prefWidth="210.0" promptText="Contraseña" style="-fx-background-color: #0047AB;" />
-      <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="185.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="TFContrasena" layoutX="226.0" layoutY="264.0" prefHeight="26.0" prefWidth="210.0" promptText="Contraseña" style="-fx-background-color: #0047AB;" />
+      <TextField fx:id="TFEmail" layoutX="226.0" layoutY="303.0" prefHeight="26.0" prefWidth="210.0" promptText="Email" style="-fx-background-color: #0047AB;" />
+      <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="185.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../es/iesfranciscodelosrios/imagenes/candado.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="IMvolver" fitHeight="40.0" fitWidth="43.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#volver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="185.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../es/iesfranciscodelosrios/imagenes/back-button.png" />
+            <Image url="@../es/iesfranciscodelosrios/imagenes/email.png" />
          </image>
       </ImageView>
    </children>

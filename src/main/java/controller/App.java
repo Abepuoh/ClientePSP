@@ -14,10 +14,10 @@ import java.io.IOException;
 public class App extends Application {
 	public static Stage rootstage;
     private static Scene scene;
-
+ 
     @Override
     public void start(Stage stage) throws IOException {
-
+ 
         scene = new Scene(loadFXML("logIn"), 491, 400);
         stage.setScene(scene);
         stage.show();
